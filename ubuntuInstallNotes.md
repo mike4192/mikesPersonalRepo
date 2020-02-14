@@ -2,6 +2,9 @@
 * When installing from a USB stick, need to boot USB device that has Ubuntu installation as a UEFI device
 * Choose to install bootloader on existing EFI partition which holds windows bootloakder
 
+### Install notes for XPS-13 laptop
+* Can only install if SecureBoot is disabled, and hard drive mode is AHCI instead of RAID
+* Switching from RAID to AHCI may break existing OS installation, do research on internet first
 
 ### List of software installed
 * git
@@ -9,9 +12,6 @@
 * anaconda
 * vscode
     * Markdown Preview Enhanced Plugin
-
-
-
 
 
 ### Monitor Scaling Notes
@@ -30,3 +30,15 @@
 
 * Automate this scalin process on startup by creating a bash script with the above commands and adding it as a startup application. Make sure to make it executable by changing permission: ```sudo chmod +x scalingConfig.sh```
 * Bash scripts must have #!/bin/bash at their start    
+
+### Grub Scaling so font is bigger on high DPI screen
+* Get to grub menu on boot, press esc, type ```videoinfo```
+* Note down a smaller supported resolution, and exit. Boot into linux
+* Modify grub config
+    ```sudo gedit /etc/default/grub```
+* Add the following, make sure no spaces
+    ```
+    GRUB_GFXMODE="1600x1200"
+    GRUB_GFXPAYLOAD_LINUX="keep"
+    ```
+* Run ```sudo update-grub```
