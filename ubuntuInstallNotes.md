@@ -42,3 +42,60 @@
     GRUB_GFXPAYLOAD_LINUX="keep"
     ```
 * Run ```sudo update-grub```
+
+## Mouse Sensitivity Notes
+* First, see list of devices via ```xinput list```, output will look like:
+    ```terminal
+    ⎡ Virtual core pointer                    	id=2	[master pointer  (3)]
+    ⎜   ↳ Virtual core XTEST pointer              	id=4	[slave  pointer  (2)]
+    ⎜   ↳ Logitech M720 Triathlon                 	id=9	[slave  pointer  (2)]
+    ⎜   ↳ Logitech K850                           	id=10	[slave  pointer  (2)]
+    ⎣ Virtual core keyboard                   	id=3	[master keyboard (2)]
+    ↳ Virtual core XTEST keyboard             	id=5	[slave  keyboard (3)]
+    ↳ Power Button                            	id=6	[slave  keyboard (3)]
+    ↳ Power Button                            	id=7	[slave  keyboard (3)]
+    ↳ Sleep Button                            	id=8	[slave  keyboard (3)]
+    ↳ UVC Camera (046d:0821)                  	id=11	[slave  keyboard (3)]
+    ↳ Logitech M720 Triathlon                 	id=12	[slave  keyboard (3)]
+    ↳ Logitech K850                           	id=13	[slave  keyboard (3)]
+    ```
+* Then, query properties for mouse via ```xinput list-props "pointer:Logitech M720 Triathlon"```
+    ```terminal
+    Device 'Logitech M720 Triathlon':
+	Device Enabled (154):	1
+	Coordinate Transformation Matrix (156):	1.100000, 0.000000, 0.000000, 0.000000, 1.100000, 0.000000, 0.000000, 0.000000, 1.000000
+	libinput Natural Scrolling Enabled (288):	0
+	libinput Natural Scrolling Enabled Default (289):	0
+	libinput Scroll Methods Available (290):	0, 0, 1
+	libinput Scroll Method Enabled (291):	0, 0, 0
+	libinput Scroll Method Enabled Default (292):	0, 0, 0
+	libinput Button Scrolling Button (293):	2
+	libinput Button Scrolling Button Default (294):	2
+	libinput Middle Emulation Enabled (295):	0
+	libinput Middle Emulation Enabled Default (296):	0
+	libinput Accel Speed (297):	1.000000
+	libinput Accel Speed Default (298):	0.000000
+	libinput Accel Profiles Available (299):	1, 1
+	libinput Accel Profile Enabled (300):	1, 0
+	libinput Accel Profile Enabled Default (301):	1, 0
+	libinput Left Handed Enabled (302):	0
+	libinput Left Handed Enabled Default (303):	0
+	libinput Send Events Modes Available (273):	1, 0
+	libinput Send Events Mode Enabled (274):	0, 0
+	libinput Send Events Mode Enabled Default (275):	0, 0
+	Device Node (276):	"/dev/input/event3"
+	Device Product ID (277):	1133, 16478
+	libinput Drag Lock Buttons (304):	<no items>
+	libinput Horizontal Scroll Enabled (305):	1
+    ```
+* Pertinent parameters to set are libinput Accel Speed (min max value of [-1 to 1], and Coordinate Transformation Matrix, which is like a sensitivity scaling). Example setting:
+    ```terminal
+    xinput --set-prop "pointer:Logitech M720 Triathlon" 156 1.1, 0, 0, 0, 1.1, 0, 0, 0, 1
+
+    ```
+* Settings are not saved after reboot. Set at startup by creating a bash file with the desired command, setting it as executable, and adding it as a startup script. The file would contain for example:
+    ```bash
+    #!/bin/sh
+    xinput --set-prop "pointer:Logitech M720 Triathlon" 156 1.1, 0, 0, 0, 1.1, 0, 0, 0, 1
+    ```
+    Set as executable via ```sudo chmod +x```
