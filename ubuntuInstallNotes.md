@@ -12,6 +12,9 @@
 * anaconda
 * vscode
     * Markdown Preview Enhanced Plugin
+* tldr: Summarizes man info with practical example usage
+* fzf: Command line fuzzy finder
+* broot: Visualization of directory structure
 
 
 ### Monitor Scaling Notes
