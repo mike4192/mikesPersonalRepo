@@ -2,6 +2,7 @@
 
 * [Name and Main](#name-and-main)
 * [Bash Specification](#bash-specification)
+* [Packages and Modules](#packages-and-modules)
 
 
 
@@ -61,3 +62,112 @@ Note that the shebang line is parsed by the kernel and then the script will even
 
 Similarly in case of `#!/bin/bash`:
 `bash script_name`
+
+## Packages and Modules
+All python files can be considered modules. Python modules together are considered packages. In a directory strucutre, a `__init__.py` file signifies that directory as a package.
+
+General structure recommended for a one off script:
+```
+helloworld/
+│
+├── .gitignore
+├── helloworld.py
+├── LICENSE
+├── README.md
+├── requirements.txt
+├── setup.py
+└── tests.py
+```
+
+If building a code package with supporting packages or modules, consider a structure below:
+
+```
+helloworld/
+│
+├── helloworld/
+│   ├── __init__.py
+│   ├── helloworld.py
+│   └── helpers.py
+│
+├── tests/
+│   ├── helloworld_tests.py
+│   └── helpers_tests.py
+│
+├── .gitignore
+├── LICENSE
+├── README.md
+├── requirements.txt
+└── setup.py
+```
+
+In this structure, hellowworld.py could reference helpers.py in one of the following ways:
+```python
+import helpers
+from helpers import func1
+```
+
+And an example of nested pacakges:
+
+```
+helloworld/
+│
+├── bin/
+│
+├── docs/
+│   ├── hello.md
+│   └── world.md
+│
+├── helloworld/
+│   ├── __init__.py
+│   ├── runner.py
+│   ├── hello/
+│   │   ├── __init__.py
+│   │   ├── hello.py
+│   │   └── helpers.py
+│   │
+│   └── world/
+│       ├── __init__.py
+│       ├── helpers.py
+│       └── world.py
+│
+├── data/
+│   ├── input.csv
+│   └── output.xlsx
+│
+├── tests/
+│   ├── hello
+│   │   ├── helpers_tests.py
+│   │   └── hello_tests.py
+│   │
+│   └── world/
+│       ├── helpers_tests.py
+│       └── world_tests.py
+│
+├── .gitignore
+├── LICENSE
+└── README.md
+```
+Where hello could be imported in wasys such as:
+```python
+import hello.helpers
+from hello import helpers
+```
+
+It seems that tests are usually set up to run via a `unittest` setup which is a python pacakge that would automatically set paths for testing. An alternative solution to be able to run test scripts directly would be to have something like the following in helloworld_tests.py:
+```python
+import sys, os
+testdir = os.path.dirname(__file__)
+srcdir = '../helloworld'
+sys.path.insert(0, os.path.abspath(os.path.join(testdir, srcdir)))
+
+import helloworld
+import helpers_tests
+
+# Run something in helloworld.py ...
+```
+[See more from this realpython webpage.](https://realpython.com/python-application-layouts/)
+
+[Blog post on other directory layouts for importable pacakges.](https://blog.ionelmc.ro/2014/05/25/python-packaging/#the-structure)
+
+
+
