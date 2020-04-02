@@ -10,38 +10,38 @@ Sometimes see `if __name__ == __main__` in python code. The purpose is to allow 
 
 #### Example Code
 
-    ```python
-    # Suppose this is foo.py.
+```python
+# Suppose this is foo.py.
 
-    print("before import")
-    import math
+print("before import")
+import math
 
-    print("before functionA")
-    def functionA():
-        print("Function A")
+print("before functionA")
+def functionA():
+    print("Function A")
 
-    print("before functionB")
-    def functionB():
-        print("Function B {}".format(math.sqrt(100)))
+print("before functionB")
+def functionB():
+    print("Function B {}".format(math.sqrt(100)))
 
-    print("before __name__ guard")
-    if __name__ == '__main__':
-        functionA()
-        functionB()
-    print("after __name__ guard")
-    ```
-    When python reads a source file, it first defines some special variables, one is `__name__`. When your module is the main program, e.g.
-    `python foo.py`
-    the interpreter assings the string `"__main__"` to the `__name__` variable.
-    \
-    If your module is imported by another, e.g.:
-    ```python
-    # Suppose this is in some other main program
-    import foo
-    ```
-    then `__name__` gets assigned a string that is the name of the file, in this case `"foo"`.
-    \
-    For the example above, if `foo.py` is run itself, functions A and B are executed. If `foo.py` is imported in another program, then functions A and B will not be executed.
+print("before __name__ guard")
+if __name__ == '__main__':
+    functionA()
+    functionB()
+print("after __name__ guard")
+```
+When python reads a source file, it first defines some special variables, one is `__name__`. When your module is the main program, e.g.
+`python foo.py`
+the interpreter assings the string `"__main__"` to the `__name__` variable.
+\
+If your module is imported by another, e.g.:
+```python
+# Suppose this is in some other main program
+import foo
+```
+then `__name__` gets assigned a string that is the name of the file, in this case `"foo"`.
+\
+For the example above, if `foo.py` is run itself, functions A and B are executed. If `foo.py` is imported in another program, then functions A and B will not be executed.
 
 #### Uses
 * Your module is a library, but you want to have a script mode where it runs some unit tests or a demo.
