@@ -1,4 +1,4 @@
-# Notes on MIT's The Missing Semester of your CS Education Notes
+# General Linux Notes from MIT's The Missing Semester of your CS Education
 
 ## The Shell
 * ```$PATH``` is a list of directory paths the system will search through to find a command (such as ```echo``` or ```date```)
@@ -48,3 +48,50 @@
 
 ## Useful Tools
 * **`tldr`**: practical example summary of programs/commands
+
+## SSH Alias and Auto Password
+You can create an alias and automatic login via an identity key for a host you frequently connect to. For example instead of always typing 
+
+`ssh ubuntu@ubuntuRosPi.local`
+
+and entering a password, you can instead just login via some alias name
+
+`ssh upi`
+
+
+First modify the file `~/.ssh/config`, add information such as the following:
+```
+Host your_alias_name
+    User username
+    Hostname remote.sshserver.com
+    IdentityFile ~/.ssh/authorised_keys2
+```
+Where 'your_alias_name' is a short name for the connection, something like 'pi' for example. The identity file will be covered below.
+
+Generate a rsa private and public key for the client machine (the computer used to connect to the remote). The public key will then be copied to the remote. On the client, generate a ssh key:
+
+`ssh-keygen -t rsa`
+
+Press enter twice to save to the default location and with no passphrase. Consider creating a new rsa key instead of reusing one. Copy the `id_rsa.pub` file to the remote, e.g. via scp. This command will still prompt for the remote's password:
+
+`scp ~/.ssh/id_rsa.pub ubuntu@ubuntuRosPi.local:~/.ssh/authorized_keys`
+
+Now you should be able to ssh to a remote by the shortcut name, and without having to input a password.
+
+## tmux Usage
+tmux is a terminal multiplexer. Some important keys. Note, for the shortcuts below, the syntax `C-b n` means hold Ctrl and the key b together, then let go and type the following key, n in this case.
+* **`tmux`:** Start a new session
+* **`tmux new -s NAME`:** Strt a tmux session with a name
+* **`tmux ls`:** List existing tmux sessions
+* **`tmux attach -t 0`:** Attach to existing tmux session with id 0
+* **C-b ":** Create new pane splitting down
+* **C-b %:** Create new pane splitting right
+* **C-b [arrow_key]:** Move between panes
+* **C-b d:** Detach from pane (but it still exists)
+* **C-b c:** Create new tmux window
+* **C-b p:** Switch to previous window
+* **C-b n:** Switch to next window
+* **C-d:** Exit and kill window
+* **C-b z:** Make current pane fullscreen, command again to revert back
+* **C-b C-[arrow_key]:** Resize a pane. This means press ctrl+b, let go, then press ctrl + an arrow key
+
