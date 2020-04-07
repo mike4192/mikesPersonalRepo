@@ -78,6 +78,9 @@ Press enter twice to save to the default location and with no passphrase. Consid
 
 Now you should be able to ssh to a remote by the shortcut name, and without having to input a password.
 
+## Command Line Environment
+* 
+
 ## tmux Usage
 tmux is a terminal multiplexer. Some important keys. Note, for the shortcuts below, the syntax `C-b n` means hold Ctrl and the key b together, then let go and type the following key, n in this case.
 * **`tmux`:** Start a new session
@@ -94,4 +97,6 @@ tmux is a terminal multiplexer. Some important keys. Note, for the shortcuts bel
 * **C-d:** Exit and kill window
 * **C-b z:** Make current pane fullscreen, command again to revert back
 * **C-b C-[arrow_key]:** Resize a pane. This means press ctrl+b, let go, then press ctrl + an arrow key
+* **C-b [:** Enter scrolling mode, go up and down with arrow keys or PgUp and PgDown, `q` to exit
+
 

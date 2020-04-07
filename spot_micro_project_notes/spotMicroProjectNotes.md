@@ -4,6 +4,7 @@
 * [Raspberry Pi Ubuntu Notes](#raspberry-pi-ubuntu-notes)
 * [Raspberry Pi GPIO Diagram](#raspberry-pi-gpio-diagram)
 * [Useful ROS Commands](#useful-ros-commands)
+* [Debugging in VSCode](#debugging-in-vscode)
 
 ## Raspberry Pi Raspbian Installation Notes
 Following instructions on http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Kinetic%20on%20the%20Raspberry%20Pi
@@ -65,6 +66,8 @@ Following instructions on http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Kine
     * Remove launch prefix section "sudo -E"
 * Connect PCA9685 and run ros i2c node via `rosrun i2cpwm_board i2cpwm_board`
 
+* Add wifi with `sudo pifi add MyNetwork password`
+
 
 ## Raspberry Pi GPIO Diagram
 ![Raspberry Pi 3 GPIO Diagram](assets/rpi_3_gpio_diagram.png)
@@ -74,4 +77,22 @@ Following instructions on http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Kine
 * See ros topic list: `rostopic list`
 * See info about topic: `rostopic info /<topic_name>`, e.g.: `rostopic info /servos_absolute`
 * Show structure of message: `rosmsg show i2cpwm_board/ServoArray`
-* 
+
+## Debugging in VSCode
+* Create launch.json file in .vscode directory with 
+```
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ROS: Attach",
+            "type": "ros",
+            "request": "attach"
+        }
+    ],
+    "compounds": []
+}
+```
+* Build executables with debug option via catkin_make: `catkin_make -DCMAKE_BUILD_TYPE=Debug`
+* Attach ros to desired process, breakpoint should work
+* See this github page for more info: https://github.com/ms-iot/vscode-ros/blob/master/doc/debug-support.md#launch

@@ -1,23 +1,36 @@
-### Ubuntu Install Notes
+
+
+# Installation Steps, Software Installed, and Configurations Applied
+The list below may reference a section with more information about that bullet
+* [Desktop Ubuntu Install Notes](#desktop-ubuntu-install-notes)
+* [Laptop Ubuntu Install Notes](#laptop-ubuntu-install-notes)
+* [Monitor Scaling Notes](#monitor-scaling-notes)
+* [Grub Scaling](#grub-scaling-so-font-is-bigger-on-high-DPI-screen)
+* [Mouse Sensitivity](#mouse-sensitivity-notes)
+* Software Installed:
+    * git
+    * git-cola
+    * anaconda
+    * [VSCode](#vscode)
+        * Markdown Preview Enhanced Plugin
+        * ROS plugin
+    * tldr: Summarizes man info with practical example usage
+    * fzf: Command line fuzzy finder
+    * broot: Visualization of directory structure
+    * [tmux](#tmux)
+
+
+
+## Desktop Ubuntu Install Notes
 * When installing from a USB stick, need to boot USB device that has Ubuntu installation as a UEFI device
 * Choose to install bootloader on existing EFI partition which holds windows bootloakder
 
-### Install notes for XPS-13 laptop
+## Laptop Ubuntu Install Notes
 * Can only install if SecureBoot is disabled, and hard drive mode is AHCI instead of RAID
 * Switching from RAID to AHCI may break existing OS installation, do research on internet first
 
-### List of software installed
-* git
-* git-cola
-* anaconda
-* vscode
-    * Markdown Preview Enhanced Plugin
-* tldr: Summarizes man info with practical example usage
-* fzf: Command line fuzzy finder
-* broot: Visualization of directory structure
 
-
-### Monitor Scaling Notes
+## Monitor Scaling Notes
 * Ubutnu 18.04 doesn't support fractional scaling for high DPI screen, and 200% is too large
 * For a high resolution screen, can get a better scaling by running the following commands. Replace ```DP-0``` with own monitor. Can find monitor info by ```xrandr --current```
     ```bash
@@ -102,3 +115,55 @@
     xinput --set-prop "pointer:Logitech M720 Triathlon" 156 1.1, 0, 0, 0, 1.1, 0, 0, 0, 1
     ```
     Set as executable via ```sudo chmod +x```
+
+## tmux
+Remapped default key mappings to more convenient settings:
+  * `Ctrl-b` to `Ctrl-a`
+  * Pane splits from `"`, `%` to `|`, `-`
+  * Pane traversal to `Alt+arrow_key`
+
+Set the following configuration settings in `~/.tmux.conf`: 
+```
+# remap prefix from 'C-b' to 'C-a'
+unbind C-b
+set-option -g prefix C-a
+bind-key C-a send-prefix
+
+# split panes using | and -
+bind | split-window -h
+bind - split-window -v
+unbind '"'
+unbind %
+
+# switch panes using Alt-arrow without prefix
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+# Allow ctrl+arrow for word jumping,
+# for example
+set-window-option -g xterm-keys on
+
+# Get prompt color in tmux
+set -g default-terminal "screen-256color"
+```
+## VSCode
+* Installed Markdown Preview Enhanced
+* Installed ROS tools
+* Installed python, c++, python linter support
+* Added custom key binding to allow switching from code to terminal via Ctrl+ ` :
+    *Press Cmd+Shift+Pm ad Open Keyboard shortcuts JSON file, add following:
+    ```
+    // Toggle between terminal and editor focus
+    { "key": "ctrl+`", "command": "workbench.action.terminal.focus"},
+    { "key": "ctrl+`", "command": "workbench.action.focusActiveEditorGroup", "when": "terminalFocus"}
+    ```
+
+## Bash Aliases
+```
+alias gs="git status" # Git status shortcut
+alias ll="ls -lah" # shortcut to show all files, with human readable sizes
+alias mv="mv -i" # Move interactive to avoid accidental overwrite
+alias cl="clear" # Shortcut for clear
+```
