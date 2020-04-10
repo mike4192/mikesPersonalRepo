@@ -89,7 +89,9 @@ class TwoBarLinkage(object):
         '''
         q2 = math.acos((x_des**2 + y_des**2 - self.a1**2 - self.a2**2)/(2*self.a1*self.a2))
 
-        q1 = math.atan(y_des/x_des) - math.atan((self.a2*math.sin(q2)) / (self.a1 + self.a2*math.cos(q2)) )
+        # q1 = math.atan(y_des/x_des) - math.atan((self.a2*math.sin(q2)) / (self.a1 + self.a2*math.cos(q2)) )
+
+        q1 = math.atan2(y_des,x_des) - math.atan2((self.a2*math.sin(q2)) , (self.a1 + self.a2*math.cos(q2)) )
 
         self.q2 = q2
         self.q1 = q1
@@ -99,7 +101,7 @@ class TwoBarLinkage(object):
         self._link2_pose = self._link1_pose @ htz(self.q2,self.a2,0,0)
 
 
-    def plot(self):
+    def plot(self,ax):
         """
         Helper function to plot the two bar linkage with coordinate systems for the pose of each link
 
@@ -107,11 +109,11 @@ class TwoBarLinkage(object):
             ax: The axes to draw to
 
         Returns:
-            out
+            None
 
         """
 
-        fig, ax = plt.subplots(1, 1)
+        # fig, ax = plt.subplots(1, 1)
 
         axes_length_scale = 0.25
         linewidth = 3
@@ -150,10 +152,6 @@ class TwoBarLinkage(object):
                  link2_axes[1][0]*axes_length_scale, link2_axes[1][1]*axes_length_scale,
                  width=0.01,color='r')
         
-
-        ax.plot(1.5,3,'go')
-
-        
         ax.axis('scaled')
 
         # Size axes to capture entire linkage
@@ -173,14 +171,32 @@ class TwoBarLinkage(object):
         ax.set_xlim(axmin-buffer,axmax+buffer)
         ax.set_ylim(axmin-buffer,axmax+buffer)
         
-        
-
-        plt.show()
 
         return None
 
+    def get_line_data(self):
+        """
+        Helper function to return endpoint coordinates for to two linkages 
+
+        Parameters:
+            None
+
+        Returns:
+            A tuple of two np matrices consisting of endpoint coordinates 
+            for the linkages. First row are x points, second row are y points 
+
+        """
+
+        # Link 1
+        link1_end_pos = self.get_link1_end_position()
+        link1 = np.array([ [ 0,link1_end_pos[0] ],
+                        [ 0,link1_end_pos[1] ] ])
+
+        
+        # Link 2
+        link2_end_pos = self.get_link2_end_position()
+        link2 = np.array([ [ link1_end_pos[0],link2_end_pos[0] ],
+                        [ link1_end_pos[1],link2_end_pos[1] ] ])
 
 
-
-# fig, ax = plt.subplots(1, 1)
-# my_plotter(ax, data1, data2, {'marker':'x'})
+        return (link1,link2)
