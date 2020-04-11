@@ -5,6 +5,7 @@
 * [Raspberry Pi GPIO Diagram](#raspberry-pi-gpio-diagram)
 * [Useful ROS Commands](#useful-ros-commands)
 * [Debugging in VSCode](#debugging-in-vscode)
+* [Rotation Matrices](#rotation-matrices)
 
 ## Raspberry Pi Raspbian Installation Notes
 Following instructions on http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Kinetic%20on%20the%20Raspberry%20Pi
@@ -96,3 +97,23 @@ Following instructions on http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Kine
 * Build executables with debug option via catkin_make: `catkin_make -DCMAKE_BUILD_TYPE=Debug`
 * Attach ros to desired process, breakpoint should work
 * See this github page for more info: https://github.com/ms-iot/vscode-ros/blob/master/doc/debug-support.md#launch
+
+## Rotation Matrices
+Order of rotation matrices determine how a rotation is done.
+
+For example, consider the rotation matrix:
+`R = R_x * R_y * R_z`
+Where R_x is a rotation about the x axis, and so forth. The matrix R can be 
+thought of as doing one of the following:
+1. A rotation in the order x, y, and then z, about the local axes of an object
+2. A rotation in the order z, y, x in the global, fixed, coordinate system.
+
+In the case of the first operation, the columns of R represent the basis of the locally rotated coordinate system expressed in the global fixed coordinate system.
+
+The following two diagrams provide an equivalent explanation:
+![Global transform](assets/global_transform.png)
+
+![Local transform](assets/local_transform.png)
+
+Images from here: http://web.cse.ohio-state.edu/~wang.3602/courses/cse5542-2013-spring/6-Transformation_II.pdf
+
