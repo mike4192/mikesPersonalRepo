@@ -12,8 +12,6 @@ The list below may reference a section with more information about that bullet
     * git-cola
     * anaconda
     * [VSCode](#vscode)
-        * Markdown Preview Enhanced Plugin
-        * ROS plugin
     * tldr: Summarizes man info with practical example usage
     * fzf: Command line fuzzy finder
     * broot: Visualization of directory structure
@@ -151,6 +149,7 @@ set -g default-terminal "screen-256color"
 ## VSCode
 * Installed Markdown Preview Enhanced
 * Installed ROS tools
+* Installed Cmake language support
 * Installed python, c++, python linter support
 * Added custom key binding to allow switching from code to terminal via Ctrl+ ` :
     *Press Cmd+Shift+Pm ad Open Keyboard shortcuts JSON file, add following:
