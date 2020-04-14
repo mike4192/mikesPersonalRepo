@@ -3,7 +3,7 @@
 * [Name and Main](#name-and-main)
 * [Bash Specification](#bash-specification)
 * [Packages and Modules](#packages-and-modules)
-
+* [Unit Testing](#unit-testing)
 
 
 ## Name and Main
@@ -169,5 +169,16 @@ import helpers_tests
 
 [Blog post on other directory layouts for importable pacakges.](https://blog.ionelmc.ro/2014/05/25/python-packaging/#the-structure)
 
+
+## Unit Testing
+
+Sample directory structure
+Sample import calls
+
+Sample call to run unit test vai discovery:
+
+From project dir:
+* `python -m unittest`: Automatically performs recursive discovery, finds and runs any files `test*.py`. `-m` for module run
+* Can also run individal test, e.g.: `python -m my_package.mymodule.test_my_module`
 
 
