@@ -100,3 +100,6 @@ tmux is a terminal multiplexer. Some important keys. Note, for the shortcuts bel
 * **C-b [:** Enter scrolling mode, go up and down with arrow keys or PgUp and PgDown, `q` to exit
 
 
+## Debugging and Logging
+* Most system and program logs placed under `/var/log/` 
+

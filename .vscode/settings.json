@@ -1,6 +1,6 @@
 {
     "cmake.configureOnOpen": false,
-    "python.pythonPath": "/home/mike/anaconda3/envs/kinematics/bin/python",
+    "python.pythonPath": "/home/mike/anaconda3/envs/smk/bin/python",
     "editor.hover.enabled": true,
     "editor.parameterHints.enabled": false,
 }
