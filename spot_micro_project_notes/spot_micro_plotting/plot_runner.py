@@ -27,7 +27,7 @@ ax.set_ylim3d([-0.2,0.2])
 # ax.view_init(elev=135,azim=0)
 
 # Instantiate spot micro stick figure obeject
-sm = SpotMicroStickFigure()
+sm = SpotMicroStickFigure(phi=10*d2r,theta=10*d2r,psi=20*d2r)
 
 # Try setting each leg to a desired y position
 x4 = -.055
@@ -37,11 +37,27 @@ z4 = 0
 leg12_angs = smk.ikine(x4,y4,z4,l1,l2,l3,legs12 = True)
 leg34_angs = smk.ikine(x4,y4,z4,l1,l2,l3,legs12 = False)
 
+# Define absolute position for the legs
+l = sm.body_length
+w = sm.body_width
+l1 = sm.hip_length
+l2 = sm.upper_leg_length
+l3 = sm.lower_leg_length
+desired_p4_points = np.array([ [-l/2,   0,  w/2 + l1],
+                               [ l/2 ,  0,  w/2 + l1],
+                               [ l/2 ,  0, -w/2 - l1],
+                               [-l/2 ,  0, -w/2 - l1] ])
+
+# Get body pose
+ht_body = sm.ht_body
+leg_angs = smk.ikine_body_pose(ht_body,desired_p4_points,l,w,l1,l2,l3)
+
+print(leg_angs[0][2])
 print('Leg angles')
-print('q1: %2.1f deg, q2: %2.1f deg, q3: %2.1f deg'%(leg12_angs[0]*r2d,leg12_angs[1]*r2d,leg12_angs[2]*r2d))
+print('q1: %2.1f deg, q2: %2.1f deg, q3: %2.1f deg'%(leg_angs[0][0]*r2d,leg_angs[0][1]*r2d,leg_angs[0][2]*r2d))
 
 
-sm.set_leg_angles((leg12_angs,leg12_angs,leg34_angs,leg34_angs))
+sm.set_leg_angles(leg_angs)
 
 # Get leg coordinates
 coords = sm.get_leg_coordinates()
@@ -63,9 +79,6 @@ for i in range(4):
     y_vals = [coords[ind][0][1], coords[ind+1][0][1]]
     z_vals = [coords[ind][0][2], coords[ind+1][0][2]]
     lines.append(ax.plot(x_vals,z_vals,y_vals,color='k')[0])
-
-
-
 
 
 # Plot color order for leg links: (hip, upper leg, lower leg)
