@@ -27,15 +27,12 @@ ax.set_ylim3d([-0.2,0.2])
 # ax.view_init(elev=135,azim=0)
 
 # Instantiate spot micro stick figure obeject
-sm = SpotMicroStickFigure(phi=10*d2r,theta=10*d2r,psi=20*d2r)
+sm = SpotMicroStickFigure(x=0,y=0.18,z=0, theta=00*d2r)
 
-# Try setting each leg to a desired y position
-x4 = -.055
-y4 = -.18
-z4 = 0
-(l1,l2,l3) = (sm.hip_length,sm.upper_leg_length,sm.lower_leg_length)
-leg12_angs = smk.ikine(x4,y4,z4,l1,l2,l3,legs12 = True)
-leg34_angs = smk.ikine(x4,y4,z4,l1,l2,l3,legs12 = False)
+# # Try setting each leg to a desired y position
+# x4 = -.055
+# y4 = -.18
+# z4 = 0
 
 # Define absolute position for the legs
 l = sm.body_length
@@ -48,16 +45,10 @@ desired_p4_points = np.array([ [-l/2,   0,  w/2 + l1],
                                [ l/2 ,  0, -w/2 - l1],
                                [-l/2 ,  0, -w/2 - l1] ])
 
-# Get body pose
-ht_body = sm.ht_body
-leg_angs = smk.ikine_body_pose(ht_body,desired_p4_points,l,w,l1,l2,l3)
+sm.set_absolute_foot_coordinates(desired_p4_points)
 
-print(leg_angs[0][2])
-print('Leg angles')
-print('q1: %2.1f deg, q2: %2.1f deg, q3: %2.1f deg'%(leg_angs[0][0]*r2d,leg_angs[0][1]*r2d,leg_angs[0][2]*r2d))
-
-
-sm.set_leg_angles(leg_angs)
+# Set a pitch angle
+sm.set_body_angles(theta=10*d2r)
 
 # Get leg coordinates
 coords = sm.get_leg_coordinates()
