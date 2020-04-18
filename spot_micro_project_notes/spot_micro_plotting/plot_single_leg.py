@@ -34,7 +34,7 @@ ht_start = transformations.homog_transform(0,0,0,0,0,0)
 l1 = 0.055
 l2 = 0.1075
 l3 = 0.13
-sml = SpotMicroLeg(0,0,0,l1,l2,l3,ht_start)
+sml = SpotMicroLeg(0,0,0,l1,l2,l3,ht_start,leg12=True)
 
 # Try leg to a desired position
 x4 = 0
@@ -47,7 +47,7 @@ print('Leg angles')
 print('q1: %2.1f deg, q2: %2.1f deg, q3: %2.1f deg'%(q1*r2d,q2*r2d,q3*r2d))
 
 sml.set_angles(q1,q2,q3)
-# sml.set_angles(10*d2r,10*d2r,10*d2r)
+# sml.set_angles(10*d2r,0*d2r,00*d2r)
 
 
 # Get leg coordinates
