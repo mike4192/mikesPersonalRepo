@@ -131,7 +131,7 @@ pitch_angles = np.linspace(-30*d2r,30*d2r,num_angles)
 coord_data = []
 for theta in pitch_angles:
     # Set a pitch angle
-    sm.set_body_angles(psi=theta)
+    sm.set_body_angles(theta=theta)
 
     # Get leg coordinates and append to data list
     coord_data.append(sm.get_leg_coordinates())
@@ -140,6 +140,6 @@ coord_data = coord_data + coord_data[::-1]
 
 # Creating the Animation object
 line_ani = animation.FuncAnimation(fig, update_lines, num_angles*2, fargs=(coord_data, lines),
-                                   interval=50, blit=False)
+                                   interval=75, blit=False)
 
 plt.show()

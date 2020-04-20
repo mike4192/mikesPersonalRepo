@@ -153,7 +153,13 @@ import hello.helpers
 from hello import helpers
 ```
 
-It seems that tests are usually set up to run via a `unittest` setup which is a python pacakge that would automatically set paths for testing. An alternative solution to be able to run test scripts directly would be to have something like the following in helloworld_tests.py:
+Within packages in python 3, stuff **must** be imported with relative imports. For example, if `helpers.py` within directory `hello` were to import `hello.py`, it must import it as:
+```python
+import .helpers
+```
+A single `.` indicates current directory, `..` indicates up a directory, `...` indicates up 2 directories, and so on...
+
+See more info about unit testing below, but an alternative solution to be able to run test scripts directly, without unittest auto discovery, would be to have something like the following in helloworld_tests.py:
 ```python
 import sys, os
 testdir = os.path.dirname(__file__)
@@ -171,14 +177,51 @@ import helpers_tests
 
 
 ## Unit Testing
-
-Sample directory structure
-Sample import calls
-
-Sample call to run unit test vai discovery:
-
-From project dir:
-* `python -m unittest`: Automatically performs recursive discovery, finds and runs any files `test*.py`. `-m` for module run
+####Example directory structure I've implemented so far for testing:
+```
+helloworld/
+├── __init__.py
+├── runner.py
+|
+├── hello/
+│   ├── __init__.py
+│   ├── hello.py
+│   ├── helpers.py
+│   │
+│   └── tests/
+│       ├── test_helpers.py 
+│       └── test_hello.py
+│       
+│
+├── world/
+│    ├── __init__.py
+│    ├── helpers.py
+│    └── world.py
+│    │
+│    └── tests/
+│        ├── test_helpers.py 
+│        └── test_world.py
+│
+├── tests/
+│   └── test_runner.py
+│
+└── README.md
+```
+With this structure, a unit test suite can be run from the top level  ```helloworld``` directory by running: ```python -m unittest discover -t ..```. This command will recursively find all files with `test` at the front and execute them.
+* Can also run `python -m unittest`, but from directory above module. Also automatically performs recursive discovery, finds and runs any files `test*.py`. `-m` for module run
 * Can also run individal test, e.g.: `python -m my_package.mymodule.test_my_module`
 
+####Example file with barebones unit test structure:
+
+```python
+import unittest
+
+class TestMyThing(unittest.TestCase):
+    '''Tests something'''
+
+    def test_a_thing(self):
+        '''Test a thing'''
+        
+        self.assertEqual(test1thing,test2thing)
+```
 

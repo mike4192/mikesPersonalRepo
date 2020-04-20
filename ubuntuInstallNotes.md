@@ -158,6 +158,15 @@ set -g default-terminal "screen-256color"
     { "key": "ctrl+`", "command": "workbench.action.terminal.focus"},
     { "key": "ctrl+`", "command": "workbench.action.focusActiveEditorGroup", "when": "terminalFocus"}
     ```
+* In settings.json file, added ignores for pycache files and folders, and disabled parameter hints for python
+    ```
+    "editor.hover.enabled": true,
+    "editor.parameterHints.enabled": false,
+    "files.exclude": {
+        "**/.git": true,
+        "**/*.pyc": {"when": "$(basename).py"}, 
+        "**/__pycache__": true
+    ```
 
 ## Bash Aliases
 ```
