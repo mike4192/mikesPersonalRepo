@@ -103,3 +103,8 @@ tmux is a terminal multiplexer. Some important keys. Note, for the shortcuts bel
 ## Debugging and Logging
 * Most system and program logs placed under `/var/log/` 
 
+## Versioning
+* Semantic versioning example: 8.1.7:
+* First number is major release, indicates changes introduced that will not be backwards compatable with other major release
+* Second number is minor release, indicates new features, but still backwards compatable with all all same major release
+* Third number indicates patch, no change to interface. E.g.: security fix

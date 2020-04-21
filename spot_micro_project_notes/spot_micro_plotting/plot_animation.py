@@ -73,7 +73,7 @@ ax.set_ylim3d([-0.2,0.2])
 # ax.view_init(elev=135,azim=0)
 
 # Instantiate spot micro stick figure obeject
-sm = SpotMicroStickFigure(x=0,y=0.18,z=0, theta=00*d2r)
+sm = SpotMicroStickFigure(x=0,y=0.14,z=0, theta=00*d2r)
 
 # Define absolute position for the legs
 l = sm.body_length
@@ -89,7 +89,7 @@ desired_p4_points = np.array([ [-l/2,   0,  w/2 + l1],
 sm.set_absolute_foot_coordinates(desired_p4_points)
 
 # Set a pitch angle
-sm.set_body_angles(theta=10*d2r)
+sm.set_body_angles(theta=00*d2r)
 
 # Get leg coordinates
 coords = sm.get_leg_coordinates()
@@ -133,6 +133,8 @@ for theta in pitch_angles:
     # Set a pitch angle
     sm.set_body_angles(theta=theta)
 
+    x = sm.get_leg_angles()
+    
     # Get leg coordinates and append to data list
     coord_data.append(sm.get_leg_coordinates())
 
