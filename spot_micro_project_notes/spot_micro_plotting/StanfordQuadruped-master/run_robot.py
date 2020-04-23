@@ -63,7 +63,7 @@ def main(use_imu=False):
         # joystick_interface.set_color(config.ps4_color)
     count = -1
     
-    while count<150:
+    while count<101:
         
         now = time.time()
         if now - last_loop < config.dt:
@@ -127,16 +127,42 @@ def main(use_imu=False):
         
         f4xpos.append(d[0][3])
         f4zpos.append(d[2][3])
+
+
+    COLOR='blue'
+    MAP='winter'
+    NPOINTS = len(f1xpos)
+
+    cm = plt.get_cmap(MAP)
+    colors = plt.cm.winter(np.linspace(0,1,NPOINTS))
+    ax[0,0].set_prop_cycle('color',colors)
+    for i in range(NPOINTS-1):
+        ax[0,0].plot(f1xpos[i:i+2],f1zpos[i:i+2])
+
+    ax[0,1].set_prop_cycle('color',colors)
+    for i in range(NPOINTS-1):
+        ax[0,1].plot(f2xpos[i:i+2],f2zpos[i:i+2])
     
-    ax[0,0].plot(f1xpos,f1zpos)
-    ax[0,1].plot(f2xpos,f2zpos)
-    ax[1,0].plot(f3xpos,f3zpos)
-    ax[1,1].plot(f4xpos,f4zpos)
+    ax[1,0].set_prop_cycle('color',colors)
+    for i in range(NPOINTS-1):
+        ax[1,0].plot(f3xpos[i:i+2],f3zpos[i:i+2])
+
+    ax[1,1].set_prop_cycle('color',colors)
+    for i in range(NPOINTS-1):
+        ax[1,1].plot(f4xpos[i:i+2],f4zpos[i:i+2])
+
     
-    ax[0,0].axis('scaled')
-    ax[0,1].axis('scaled')
-    ax[1,0].axis('scaled')
-    ax[1,1].axis('scaled')
+
+
+
+    #ax[0,1].plot(f2xpos,f2zpos)
+    #ax[1,0].plot(f3xpos,f3zpos)
+    #ax[1,1].plot(f4xpos,f4zpos)
+    # 
+    #ax[0,0].axis('scaled')
+    #ax[0,1].axis('scaled')
+    #ax[1,0].axis('scaled')
+    #ax[1,1].axis('scaled')
 
     plt.show()
     
