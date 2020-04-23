@@ -135,35 +135,48 @@ def main(use_imu=False):
 
     cm = plt.get_cmap(MAP)
     colors = plt.cm.winter(np.linspace(0,1,NPOINTS))
-    ax[0,0].set_prop_cycle('color',colors)
-    for i in range(NPOINTS-1):
-        ax[0,0].plot(f1xpos[i:i+2],f1zpos[i:i+2])
-
     ax[0,1].set_prop_cycle('color',colors)
     for i in range(NPOINTS-1):
-        ax[0,1].plot(f2xpos[i:i+2],f2zpos[i:i+2])
-    
-    ax[1,0].set_prop_cycle('color',colors)
-    for i in range(NPOINTS-1):
-        ax[1,0].plot(f3xpos[i:i+2],f3zpos[i:i+2])
+        ax[0,1].plot(f1xpos[i:i+2],f1zpos[i:i+2])
 
+    ax[0,0].set_prop_cycle('color',colors)
+    for i in range(NPOINTS-1):
+        ax[0,0].plot(f2xpos[i:i+2],f2zpos[i:i+2])
+    
     ax[1,1].set_prop_cycle('color',colors)
     for i in range(NPOINTS-1):
-        ax[1,1].plot(f4xpos[i:i+2],f4zpos[i:i+2])
+        ax[1,1].plot(f3xpos[i:i+2],f3zpos[i:i+2])
 
+
+    ax[1,0].set_prop_cycle('color',colors)
+    for i in range(NPOINTS-1):
+        ax[1,0].plot(f4xpos[i:i+2],f4zpos[i:i+2])
+
+    # Plot foot default stance points as red dots
+    ax[0,1].plot(config.default_stance[0,0],config.default_z_ref,'ro')
+    ax[0,0].plot(config.default_stance[0,1],config.default_z_ref,'ro')
+    ax[1,1].plot(config.default_stance[0,2],config.default_z_ref,'ro')
+    ax[1,0].plot(config.default_stance[0,3],config.default_z_ref,'ro')
+
+    # Set axis labels
+    for i in range(2):
+        for j in range(2):
+            ax[i,j].set_ylabel('z position')
+            ax[i,j].set_xlabel('x position')
     
+    # Set titles
+    ax[0,1].set_title('Front Right Foot')
+    ax[0,0].set_title('Front Left Foot')
+    ax[1,0].set_title('Back Left Foot')
+    ax[1,1].set_title('Back Right Foot')
 
-
-
-    #ax[0,1].plot(f2xpos,f2zpos)
-    #ax[1,0].plot(f3xpos,f3zpos)
-    #ax[1,1].plot(f4xpos,f4zpos)
-    # 
-    #ax[0,0].axis('scaled')
-    #ax[0,1].axis('scaled')
-    #ax[1,0].axis('scaled')
-    #ax[1,1].axis('scaled')
-
+    ax[0,0].axis('scaled')
+    ax[0,1].axis('scaled')
+    ax[1,0].axis('scaled')
+    ax[1,1].axis('scaled')
+    
+    # Set title
+    fig.suptitle('Pupper Trot Foot Positions, Forward Speed 0.2 m/s, alpha = 0.8',fontsize=16)
     plt.show()
     
 
