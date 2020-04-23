@@ -83,3 +83,32 @@ inoremap <Down>  <ESC>:echoe "Use j"<CR>
 "Add ctrlp plugin
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 
+" Absolute/Relative line number toggle function
+function! ToggleNumber()
+    if(&relativenumber == 1)
+        set norelativenumber
+        set number
+    else
+        set relativenumber
+    endif
+endfunc
+
+" Leader Shortcuts
+let mapleader=" "		" leader is space
+nnoremap <leader>t :call ToggleNumber()<CR>
+" Press space+t to toggle highlighting on/off, and show current value.
+:noremap <leader>h :set hlsearch! hlsearch?<CR>
+
+
+
+
+" Spaces & Tabs
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set tabstop=4       " number of visual spaces per TAB
+set softtabstop=4   " number of spaces in tab when editing
+
+
+
+
+
+
