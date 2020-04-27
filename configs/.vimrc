@@ -146,3 +146,7 @@ colorscheme codedark
 " toggled
 hi Search ctermbg=LightGreen
 hi IncSearch ctermbg=LightGreen
+
+" NERDTree Settings
+" Ignore files types
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
