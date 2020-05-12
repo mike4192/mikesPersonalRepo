@@ -130,23 +130,26 @@ endfunc
 let mapleader=" "		" leader is space
 nnoremap <leader>t :call ToggleNumber()<CR>
 " Press space+t to toggle highlighting on/off, and show current value.
-:noremap <leader>h :set hlsearch! hlsearch?<CR>
+noremap <leader>h :set hlsearch! hlsearch?<CR>
 
-
+nnoremap <leader>nt :NERDTreeToggle<cr>
 
 
 " Spaces & Tabs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
-
+filetype plugin indent on " Look for file for specifying indentation options, e.g.: cpp.vim in .vim/indent
 colorscheme codedark
 
 " Override highlighting color during incsearch, and if hlighiting globally is
 " toggled
-hi Search ctermbg=LightGreen
-hi IncSearch ctermbg=LightGreen
+hi Search ctermbg=LightBlue
+hi IncSearch ctermbg=LightBlue
 
 " NERDTree Settings
 " Ignore files types
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+
+" You complete me global config file that is used if another is not found
+let g:ycm_global_ycm_extra_conf = '/home/mike/.vim/.ycm_extra_conf.py'

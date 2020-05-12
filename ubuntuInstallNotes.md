@@ -16,6 +16,7 @@ The list below may reference a section with more information about that bullet
     * fzf: Command line fuzzy finder
     * broot: Visualization of directory structure
     * [tmux](#tmux)
+    * [vim](#vim)
 
 
 
@@ -175,3 +176,13 @@ alias ll="ls -lah" # shortcut to show all files, with human readable sizes
 alias mv="mv -i" # Move interactive to avoid accidental overwrite
 alias cl="clear" # Shortcut for clear
 ```
+
+
+## Vim
+Installed vim 8+ and following via Vundle plugin manager:
+YouCompleteMe: (Installed version with legacy python2 support, and --clang-completer flag)
+nerdcommenter
+indentLine
+ctrlp
+nerdtree
+vim-code-dark

@@ -6,6 +6,7 @@
 * [Useful ROS Commands](#useful-ros-commands)
 * [Debugging in VSCode](#debugging-in-vscode)
 * [Rotation Matrices](#rotation-matrices)
+* [Catkin Stuff](#catkin-stuff)
 
 ## Raspberry Pi Raspbian Installation Notes
 Following instructions on http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Kinetic%20on%20the%20Raspberry%20Pi
@@ -116,4 +117,11 @@ The following two diagrams provide an equivalent explanation:
 ![Local transform](assets/local_transform.png)
 
 Images from here: http://web.cse.ohio-state.edu/~wang.3602/courses/cse5542-2013-spring/6-Transformation_II.pdf
+
+## Catkin Stuff
+Convert catkin workspace to catkin_tools, delete build/devel/install directories (everything other than src) and run catkin build. Extend base /opt/ros/kinetic build environment.
+
+Enable export of compiler build flags for youcomplete me in vim (catkin config -DCMAKE_EXPORT_COMPILE_COMMANDS=ON)
+
+Add .ycm_extra_conf.py file to catkin_ws directory
 
