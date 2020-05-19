@@ -153,3 +153,5 @@ let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 " You complete me global config file that is used if another is not found
 let g:ycm_global_ycm_extra_conf = '/home/mike/.vim/.ycm_extra_conf.py'
+let g:ycm_autoclose_preview_window_after_insertion = 1
+
