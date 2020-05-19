@@ -125,3 +125,5 @@ Enable export of compiler build flags for youcomplete me in vim (catkin config -
 
 Add .ycm_extra_conf.py file to catkin_ws directory
 
+Install rospkg via pip3 (sudo pip3 install -U rospkg). May need to first install python3-pip
+
