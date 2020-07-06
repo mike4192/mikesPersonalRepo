@@ -6,6 +6,7 @@
 * [Constructors and Destructors](#Constructors-and-Destructors)
 * [Loops](#loops)
 * [Pointers](#pointers)
+* [Vector](#vector)
 
 
 ### Initilization
@@ -104,7 +105,7 @@ for (int i = 0; i < some_num; i++) {
 
 * Range based for loop (similar to elementwise python loop), c++11
 ```c++
-for (elem : some_vector) {
+for (auto elem : some_vector) {
     // elem will be the element in the vectors
 }
 ```
@@ -148,7 +149,14 @@ for (auto it = my_vector.rbegin(); it != my_vector.rend(); ++it) {
 
 ## Unordered Map
 
-## Vector Operations
+## Vector
+#### Constructors
+| Code                     | Operation                         | Time Complexity |
+|--------------------------|--------------------------------------------------------|------|
+| `vector<T> v;`{:.c++}             | Make an empty vector.                                  | O(1) |
+| vector<T> v(n);          | Make a vector with N elements.                         | O(n) |
+| vector<T> v(n, value);   | Make a vector with N elements, initialized to value.   | O(n) |
+| vector<T> v(begin, end); | Make a vector and copy the elements from begin to end. | O(n) |
 * Insert (and concatenate)
 * Erase
 * Sub vector (splicing)
