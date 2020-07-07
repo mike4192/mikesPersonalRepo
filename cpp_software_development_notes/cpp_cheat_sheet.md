@@ -16,6 +16,9 @@
 * [Unordered Set or Hash Set](#unordered-set-or-hash-set)
 * [Unordered Map or Hash Table](#unordered-map-or-hash-table)
 * [STL Algorithms](#stl-algorithms)
+* [Lambda Functions](#lambda-functions)
+* [Smart Pointers](#smart-pointers)
+* [Major Additions of C++11](#major-additions-of-c++11)
 
 
 ### Initilization
@@ -49,6 +52,14 @@ public:
   // Other work here
   } 
 ```
+
+Map initialization example:
+```c++
+map<string, string> singers = 
+  { {"Lady Gaga", "+1 (212) 555-7890"},
+  {"Beyonce Knowles", "+1 (212) 555-0987"}};
+```
+
 
 ## Keywods
 ```c++
@@ -561,3 +572,222 @@ for (itr = umap.begin(); itr != umap.end(); itr++)
 
 ## STL Algorithms
 Info primarily taken from here: https://users.cs.northwestern.edu/~riesbeck/programming/c++/stl-algorithms.html
+#### find
+find is for simple searching. Looks for a `value` in a container, starting at `begin` and stopping with `end`. Note `end` is one past the last item to checked, and is not checked itself.
+
+Example:
+```c++
+resultIter = find(v.begin(), v.end(), value);
+if (resultIter ~= v.end()) {
+  cout << "Found it!" << endl;
+}
+```
+#### find_if
+Same as find but searches with a defined search condition. Example:
+```c++
+class IsEven {
+  public:
+    bool operator() (int x) const
+    { return ((x % 2) == 0); }
+} evenPred;
+ 
+resultIter = find_if(v.begin(), v.end(), evenPred);
+if (resultIter != v.end())
+   cout << "Found the even number " << (*resultIter) << endl;
+```
+
+#### count
+Count is for counting occurences of a value in a container.
+```c++
+int num = count(v.begin(), v.end(), 10);
+cout << "Found " << num << " occurrences of 10." << endl;
+```
+
+`count_if` is similar to find_if.
+
+#### max_element and min_element
+Used to find max and minimum element of a range of elements in a container.
+```c++
+vector<int> stats;
+vector<int>::iterator result;
+...
+cout << "Looking for max number" << endl;
+result = max_element(stats.begin(), stats.end());
+ 
+if (result != stats.end())
+  cout << "Found " <<  (*result) << endl;
+```
+
+#### accumulate
+Adds up a rnage of elements in a container, like a `sum` function. Example:
+```c++
+cout << "Sum of all the numbers is " 
+     << accumulate(stats.begin(), stats.end(), 0)
+     << endl;
+```
+The third argument, 0 in this case, is the initial value for the sum.
+
+#### sort
+Sorts a container. 
+```c++
+sort(v.begin(), v.end());
+```
+Instead of `operator<` a specific comparison function can be used.
+```c++
+void sort(RandomAccessIterator begin,
+          RandomAccessIterator end,
+          Compare comp)
+```
+
+Time complexity: n log n
+
+
+## Lambda Functions
+A lambda function or expression is a compact function defined in place. Generally return type is evaluated by the compiler and is not necessary to specify it explicitly. Useful to use with `for_each`
+
+Basic format:
+```
+[ capture clause ] (parameters) -> return-type  
+{   
+   definition of method   
+} 
+```
+
+
+Basic example of a lambda function assigned to a handle, and used.
+```c++
+auto sum = [](int x, int y) { return x + y; };
+auto sum = [](int x, int y) -> int { return x + y; }; // equivalent definition but specifying return type
+cout << sum(5,2) << endl;
+```
+
+Example of a lambda expression defined in place in a function argument. Function to print out an argument.
+```c++ 
+// Function to print vector 
+void printVector(vector<int> v) 
+{ 
+    // lambda expression to print vector 
+    for_each(v.begin(), v.end(), [](int i) 
+    { 
+        std::cout << i << " "; 
+    }); 
+    cout << endl; 
+} 
+```
+
+The capture clause specifies which outside variables are available for the lambda function, and whether they should be captured by value or by reference. An empty capture clause means no external variables are captured.
+
+A capture clause can be the name of a variable in the same scope as the lambda function. That variable is captured by copy.
+Specifying `[=]` captures any referenced variables within the lambda by value (making a copy).
+
+A variable can be captured by reference, for example `[first_var, &some_other_var]`. `first_var` is captured by value, while `some_other_var` is captured by reference.
+
+`[&]` will capture any referenced variable by reference, but `[&, some_var]` will capture any referenced variable by reference except `some_var`.
+
+Example of capturing a single variable:
+```c++
+// The user would introduce different values for divisor    
+    int divisor = 3;
+    vector<int> numbers { 1, 2, 3, 4, 5, 10, 15, 20, 25, 35, 45, 50 };
+    for_each(numbers.begin(), numbers.end(), [divisor] (int y)
+    {
+        if (y % divisor == 0)
+        {
+            cout << y << endl;
+        }
+    });
+```
+
+Example achieving the same with `[=]`:
+```c++
+for_each(numbers.begin(), numbers.end(), [=] (int y)
+{
+    if (y % divisor == 0)
+    {
+        cout << y << endl;
+    }
+});
+```
+An arbitrary lambda expression can be passed to a function specified as a std::function type. For example:
+```c++
+void run_within_for_each(std::function<void (int)> func)
+{
+    vector<int> numbers{ 1, 2, 3, 4, 5, 10, 15, 20, 25, 35, 45, 50 };
+ 
+    for_each(numbers.begin(), numbers.end(), func);
+}
+```
+
+## Smart Pointers
+Required header:
+```c++
+#include <memory>
+```
+Basic comparison between a raw and smart pointer. A smart pointer automatically unallocates memory of the pointed to data when the pointer goes out of scope.
+```c++ 
+void UseRawPointer()
+{
+    // Using a raw pointer -- not recommended.
+    Song* pSong = new Song(L"Nothing on You", L"Bruno Mars"); 
+
+    // Use pSong...
+
+    // Don't forget to delete!
+    delete pSong;   
+}
+
+
+void UseSmartPointer()
+{
+    // Declare a smart pointer on stack and pass it the raw pointer.
+    unique_ptr<Song> song2(new Song(L"Nothing on You", L"Bruno Mars"));
+
+    // Use song2...
+    wstring s = song2->duration_;
+    //...
+
+} // song2 is deleted automatically here.
+```
+
+Alternative way to create an object instead of using the `new` keyword. Better to use make_unique except if a custom deleter is needed, or adapting a raw pointer. **make_unique** is a c++14 feature.
+```c++
+auto p1 = std::make_unique<double>(3.14);
+std::unique_ptr<SomeObject> a = std::make_unique(SomeObject(...)) // more explicit, general
+```
+
+Smart pointers must be moved to change ownership. However, it can be "lended" to a function by passing the pointer by reference.
+```c++
+std::unique_ptr<double> a = std::make_unique<double>(3.14)
+borrower(&a); //borrower function can use the pointer by reference
+taker(std::move(a)); //taker function needs pointer to be moved to it
+```
+
+a shared_ptr is similar to a unique pointer, but it can be copied, and keeps an internal count of ownership of the pointer. When the counter reaches zero (all shared pointers go out of scope), the underlying resource is destroyed.
+
+## Major Additions of C++11
+* lambda expressions
+* range based for loop
+* `nullptr` keyword
+* List initialization
+* `auto` keyword
+* deleted and defaulted functions 
+  * e.g.: `A()=default;`
+* Constructor can call another constructor of the same class (delegating)
+* Smart pointers (shared_ptr, unique_ptr, move)
+* Multithreading libraries (std::thread)
+* Variadic template (arbitrary number of template arguments)
+* unordered_map, unordered_set
+
+## Major additions of C++14
+* use of auto type-specifier in parameter list of lambda expression'
+* Return type deduction
+* Initializing stuff in lambda captures
+* std::make_unique
+
+## Major Additions of C++17
+* Folding expressions
+* Structured bindings (where a function returns a tuple like object that can be directly assigned to variables in a bracketed list `[x,y,z] = expr`)
+
+
+See this page for more comprehensive summary of features in C++11/14/17/20:
+https://github.com/AnthonyCalandra/modern-cpp-features
