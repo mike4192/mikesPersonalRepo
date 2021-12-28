@@ -1,10 +1,13 @@
 # Python Program Development General Notes 
 
+* [References](#references)
 * [Name and Main](#name-and-main)
 * [Bash Specification](#bash-specification)
 * [Packages and Modules](#packages-and-modules)
 * [Unit Testing](#unit-testing)
 
+## References
+[Comprehensive python cheat sheet](https://gto76.github.io/python-cheatsheet/)
 
 ## Name and Main
 Sometimes see `if __name__ == __main__` in python code. The purpose is to allow a piece of code to execute either as a standalone script, or be imported as a library and not execute the main function.
