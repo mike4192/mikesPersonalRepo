@@ -795,3 +795,124 @@ https://github.com/AnthonyCalandra/modern-cpp-features
 
 ## Multithreading
 https://medium.com/swlh/c-multithreading-and-concurrency-introduction-f640ce986fa7
+
+
+### Creating and starting threads
+```c++
+#include <thread>
+#include <iostream>
+#include <string>
+
+void run(std::string threadName) {
+  for (int i = 0; i < 10; i++) {
+    std::string out = threadName + std::to_string(i) + "\n";
+    std::cout << out;
+  }
+}
+
+int main() {
+  std::thread tA(run, "A");
+  std::thread tB(run, "\tB");
+  tA.join(); // Waits till thread a finishes
+  tB.join(); // waits till thread b finishes
+}
+```
+
+### Simple Mutexes
+* Example of a thread safe queue
+* Problem with simple mutex: have to remember to unlock!!!
+
+```c++
+#include <mutex>
+#include <queue>
+
+class threadSafe_queue {
+
+    std::queue<int> rawQueue; // shared structure between all threads
+    std::mutex m; // rawQueue's red door
+
+public:
+
+    int& retrieve_and_delete() {
+        int front_value = 0; // if empty return 0
+        m.lock();
+        // From now on, the current thread is the only one that can access rawQueue
+        if( !rawQueue.empty() ) {
+            front_value = rawQueue.front();
+            rawQueue.pop();
+        }
+        m.unlock();
+        // other threads can lock the mutex now
+        return front_value;
+    };
+
+    void push(int val) {
+        m.lock();
+        rawQueue.push(val);
+        m.unlock();
+    };
+
+};
+```
+
+### Lock Guard
+* Wrapper around mutex, but allows automatic unlocking when lock guard goes out of scope
+* Example of thread safe queue with lock guard
+```c++
+#include <mutex>
+#include <queue>
+
+class threadSafe_queue {
+
+    std::queue<int> rawQueue; // shared structure between all threads
+    std::mutex m; // rawQueue's red door
+
+public:
+
+    int& retrieve_and_delete() {
+        int front_value = 0; // if empty return 0
+        std::lock_guard<std::mutex> lg(m);
+        // From now on, the current thread is the only one that can access rawQueue
+        if( !rawQueue.empty() ) {
+            front_value = rawQueue.front();
+            rawQueue.pop();
+        }
+        return front_value;
+    };  // other threads can lock the mutex now
+
+    void push(int val) {
+        std::lock_guard<std::mutex> lg(m);
+        // from now on, the current thread is the only one that can access rawQueue
+        rawQueue.push(val);
+    }; // other threads can lock the mutex now
+};
+```
+
+### Unique Lock
+* Combination of simpel mutex and lock guard
+* Allows manual lock/unlock, but still unlock when going out of scope
+```c++
+#include <mutex>
+#include <vector>
+std::mutex door; //mutex declaration
+std::vector<int> v;
+{     
+     std::unique_lock<std::mutex> ul(door); 
+     // ul Constructor called. Equivalent to door.lock();
+     // ul allocated on the stack
+     // unique ownership of vector guaranteed  
+    
+     door.unlock();  
+   
+     // execution of operations that don't concern the vector
+     // ....
+     // now I need to access the vector again 
+     
+     door.lock();     
+     // Unique ownership of vector guaranteed again
+} /* unique_lock exits its scope. Destructor called. 
+  Equivalent to door.unlock(); */
+```
+
+
+
