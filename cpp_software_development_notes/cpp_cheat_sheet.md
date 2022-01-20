@@ -791,3 +791,7 @@ a shared_ptr is similar to a unique pointer, but it can be copied, and keeps an 
 
 See this page for more comprehensive summary of features in C++11/14/17/20:
 https://github.com/AnthonyCalandra/modern-cpp-features
+
+
+## Multithreading
+https://medium.com/swlh/c-multithreading-and-concurrency-introduction-f640ce986fa7
