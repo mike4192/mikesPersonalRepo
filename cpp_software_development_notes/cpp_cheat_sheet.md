@@ -793,6 +793,20 @@ See this page for more comprehensive summary of features in C++11/14/17/20:
 https://github.com/AnthonyCalandra/modern-cpp-features
 
 
+## Callable Object
+```c++
+// A callable object
+class thread_obj {
+public:
+    void operator()(int x)
+    {
+        for (int i = 0; i < x; i++)
+            cout << "Thread using function"
+                  " object as  callable\n";
+    }
+};
+```
+
 ## Multithreading
 https://medium.com/swlh/c-multithreading-and-concurrency-introduction-f640ce986fa7
 
